@@ -5247,6 +5247,134 @@ do
 	end;
 end;
 
+-- // auto stomp
+local function auto_stomp_loop()
+    while true do
+        if flags["legit_auto_stomp_enabled"] then
+            local delay = flags["legit_auto_stomp_delay"] or 0.01
+
+            local args = {
+                [1] = "Stomp"
+            }
+            game:GetService("ReplicatedStorage"):WaitForChild("MainEvent"):FireServer(unpack(args))
+            
+            task.wait(delay)
+        else
+            task.wait(0.1)
+        end
+    end
+end
+task.spawn(auto_stomp_loop)
+
+-- // anti stomp
+local function setup_anti_stomp()
+
+    local Players = game:GetService("Players")
+    local RunService = game:GetService("RunService")
+
+    local player = Players.LocalPlayer
+    local last_position = nil
+    local connection = nil
+    local resetting = false
+    local teleport_connection = nil
+
+    local function force_reset_character()
+        if player and player.Character and player.Character:FindFirstChild("Humanoid") then
+            player.Character.Humanoid.Health = 0
+            return true
+        end
+        return false
+    end
+
+    local function setup_teleport_after_respawn()
+        if teleport_connection then
+            teleport_connection:Disconnect()
+            teleport_connection = nil
+        end
+        
+        teleport_connection = player.CharacterAdded:Connect(function(new_character)
+            if not flags["legit_anti_stomp_teleport_back"] or not last_position then
+                teleport_connection:Disconnect()
+                teleport_connection = nil
+                resetting = false
+                return
+            end
+            
+            task.wait(0.3)
+            
+            local hrp = new_character:WaitForChild("HumanoidRootPart", 2)
+            if hrp and last_position then
+                hrp.CFrame = last_position
+                task.wait(0.1)
+                hrp.CFrame = last_position
+            end
+            
+            resetting = false
+            last_position = nil
+            
+            teleport_connection:Disconnect()
+            teleport_connection = nil
+        end)
+    end
+
+    local function check_health()
+        if not flags["legit_anti_stomp_enabled"] or resetting then return end
+        
+        local character = player.Character
+        if not character then return end
+        
+        local humanoid = character:FindFirstChild("Humanoid")
+        if not humanoid then return end
+        
+        local threshold = flags["legit_anti_stomp_health_threshold"] or 10
+        
+        if humanoid.Health <= threshold and humanoid.Health > 0 then
+            if flags["legit_anti_stomp_teleport_back"] and character:FindFirstChild("HumanoidRootPart") then
+                last_position = character.HumanoidRootPart.CFrame
+            end
+            
+            resetting = true
+
+            if flags["legit_anti_stomp_teleport_back"] then
+                setup_teleport_after_respawn()
+            end
+
+            if not force_reset_character() then
+                resetting = false
+            end
+        end
+    end
+
+    local function update_connection()
+        if connection then
+            connection:Disconnect()
+            connection = nil
+        end
+        
+        if flags["legit_anti_stomp_enabled"] then
+            connection = RunService.Heartbeat:Connect(check_health)
+        end
+    end
+
+    local function flag_changed(flag_name)
+        if flag_name == "legit_anti_stomp_enabled" then
+            update_connection()
+        end
+    end
+
+    RunService.Heartbeat:Connect(function()
+        local should_be_connected = flags["legit_anti_stomp_enabled"]
+        local is_connected = connection ~= nil
+        
+        if should_be_connected ~= is_connected then
+            update_connection()
+        end
+    end)
+
+    update_connection()
+end
+setup_anti_stomp()
+
 do
 	--// Example
 	local window = library:New({
@@ -5537,7 +5665,7 @@ do
 	do
 		local cframe_speed = ui.tabs["movement"]:Section({Name = "CFrame speed", Side = "Left", Size = 125});
 		local cframe_fly = ui.tabs["movement"]:Section({Name = "Fly", Side = "Left", Size = 125});
-		local misc = ui.tabs["movement"]:Section({Name = "Misc", Side = "Right", Size = 100});
+		local misc = ui.tabs["movement"]:Section({Name = "Misc", Side = "Right", Size = 150});
 		
 		--// speed
 		do
@@ -5551,6 +5679,21 @@ do
 			local main_toggle = cframe_fly:Toggle({Name = "Enabled", Flag = "rage_cframe_fly_enabled"});
 			cframe_fly:Keybind({Flag = "rage_cframe_fly_keybind", Name = "Keybind", Default = Enum.KeyCode.C, Mode = "Toggle"});
 			cframe_fly:Slider({Name = "Speed", Flag = "rage_cframe_fly_amount", Default = 1, Minimum = 1, Maximum = 30, Decimals = 0.01, Ending = "%"});
+		end;
+
+		--// auto stomp
+		do
+			local auto_stomp_toggle = misc:Toggle({Name = "Auto Stomp", Flag = "legit_auto_stomp_enabled"});
+			local auto_stomp_option_list = auto_stomp_toggle:OptionList({});
+			auto_stomp_option_list:Slider({Name = "Delay", Flag = "legit_auto_stomp_delay", Default = 0.01, Minimum = 0.01, Maximum = 1, Decimals = 0.001, Ending = "s"});
+		end;
+
+		--// anti stomp
+		do
+			local anti_stomp_toggle = misc:Toggle({Name = "Anti Stomp", Flag = "legit_anti_stomp_enabled"});
+			local anti_stomp_option_list = anti_stomp_toggle:OptionList({});
+			anti_stomp_option_list:Slider({Name = "Health Threshold", Flag = "legit_anti_stomp_health_threshold", Default = 10, Minimum = 1, Maximum = 50, Decimals = 0.1, Ending = "hp"});
+			anti_stomp_option_list:Toggle({Name = "Teleport Back", Flag = "legit_anti_stomp_teleport_back", Default = false});				
 		end;
 
 		--// misc
