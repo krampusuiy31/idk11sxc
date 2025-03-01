@@ -1,14 +1,3 @@
---// games
-if game.PlaceId == 2788229376 then
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/bs.lua",true))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/r.lua",true))()
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/p.lua",true))()
-elseif game.PlaceId == 301549746 then
-    print("Idk")
-else
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/r.lua",true))()
-end
-
 --// discord invite
 local HttpService = game:GetService("HttpService")
 
@@ -35,3 +24,14 @@ local function openDiscordInvite()
 end
 
 openDiscordInvite()
+
+--// games
+if game.PlaceId == 2788229376 then
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/bs.lua",true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/r.lua",true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/p.lua",true))()
+elseif game.PlaceId == 301549746 then
+    print("Idk")
+else
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/r.lua",true))()
+end
