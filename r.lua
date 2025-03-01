@@ -5790,7 +5790,7 @@ do
 				visuals_clone_chams:Toggle({Name = "Enabled", Flag = "visuals_clone_chams_enabled"});
 				visuals_clone_chams:Colorpicker({Name = "Color", Flag = "visuals_clone_chams_color", Default = default_color});
 				visuals_clone_chams:Slider({Name = "Duration", Flag = "visuals_clone_chams_duration", Default = 0.1, Minimum = 0.1, Maximum = 10, Decimals = 0.001, Ending = "s"});
-				visuals_clone_chams:List({Name = "To Apply", Flag = "visuals_clone_chams_to_apply", Options = {"Local Player", "Target Aim Target"}, Default = {"Local Player"}, Max = 2});
+				visuals_clone_chams:List({Name = "To Apply", Flag = "visuals_clone_chams_to_apply", Options = {"Local Player", "Target Aim Target"}, Default = {"Target Aim Target"}, Max = 2});
 			end;
 		end;
 
@@ -5990,7 +5990,7 @@ do
 			local nest = velocity_spoofer:Nest({Size = 120});
 			nest:Toggle({Name = "Enabled", Flag = "anti_aim_velocity_spoofer_enabled"});
 			nest:Keybind({Flag = "anti_aim_velocity_spoofer_keybind", Name = "Keybind", Default = Enum.KeyCode.C, Mode = "Toggle"});
-			nest:List({Name = "Type", Flag = "anti_aim_velocity_spoofer_type", Options = {"Local Strafe", "Random", "Static"}, Default = {"Static"}});
+			nest:List({Name = "Type", Flag = "anti_aim_velocity_spoofer_type", Options = {"Local Strafe", "Random", "Static"}, Default = "Static"});
 			nest:Slider({Name = "Strafe Distance", Flag = "anti_aim_velocity_spoofer_strafe_distance", Default = 1, Minimum = 1, Maximum = 20, Decimals = 0.01, Ending = "%"});
 			nest:Slider({Name = "Strafe Speed", Flag = "anti_aim_velocity_spoofer_strafe_speed", Default = 1, Minimum = 1, Maximum = 10, Decimals = 0.01, Ending = "%"});
 			nest:Slider({Name = "Static X", Flag = "anti_aim_velocity_spoofer_static_x", Default = 1, Minimum = 1, Maximum = 100, Decimals = 0.01, Ending = "'"});
