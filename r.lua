@@ -4965,7 +4965,6 @@ do
     end;
 end;
 
-if (ESP) then
 	local esp = {}; do
 		esp.players = {};
 	
@@ -5204,7 +5203,6 @@ if (ESP) then
 			end;
 		end);
 	end;
-end;
 
 --// hooks
 do
@@ -5692,7 +5690,7 @@ do
 		do
 			local anti_stomp_toggle = misc:Toggle({Name = "Anti Stomp", Flag = "legit_anti_stomp_enabled"});
 			local anti_stomp_option_list = anti_stomp_toggle:OptionList({});
-			anti_stomp_option_list:Slider({Name = "Health Threshold", Flag = "legit_anti_stomp_health_threshold", Default = 10, Minimum = 1, Maximum = 50, Decimals = 0.1, Ending = "hp"});
+			anti_stomp_option_list:Slider({Name = "Health Threshold", Flag = "legit_anti_stomp_health_threshold", Default = 10, Minimum = 1, Maximum = 50, Decimals = 1, Ending = "hp"});
 			anti_stomp_option_list:Toggle({Name = "Teleport Back", Flag = "legit_anti_stomp_teleport_back", Default = false});				
 		end;
 
@@ -5799,6 +5797,7 @@ do
 			local world_section = ui.tabs["view"]:Section({Name = "World", Side = "Left", Size = 210});
 			local lplr_section = ui.tabs["view"]:Section({Name = "Local Player", Side = "Left", Size = 210});
 			local cursor_text = ui.tabs["view"]:Section({Name = "Text", Side = "Right", Size = 210});
+			local esp_section = ui.tabs["view"]:Section({Name = "ESP", Side = "Right", Size = 210});
 
 			--// world
 			do
@@ -5932,9 +5931,7 @@ do
 				end});
 			end;
 
-			if (ESP) then
-				local esp_section = ui.tabs["view"]:Section({Name = "ESP", Side = "Right", Size = 210});
-				--// esp section
+			--// esp section
 				do
 					esp_section:Toggle({Name = "Enabled", Flag = "visuals_esp_enabled"});
 					local boxes_toggle = esp_section:Toggle({Name = "Boxes", Flag = "visuals_esp_boxes_enabled"});
@@ -5964,7 +5961,6 @@ do
 					local armor_bar_option_list = armor_bar_toggle:OptionList({});
 					armor_bar_option_list:Colorpicker({Name = "Armor Color", Flag = "visuals_esp_armor_bar_color", Default = Color3.new(1, 1, 1)});
 				end;
-			end;
 	
 			--// cursor text
 			do
