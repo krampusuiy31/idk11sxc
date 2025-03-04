@@ -30,6 +30,7 @@ if game.PlaceId == 2788229376 then
     loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/bs.lua",true))()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/r.lua",true))()
     loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/p.lua",true))()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/krampusuiy31/idk11sxc/refs/heads/main/chat.lua",true))()
 elseif game.PlaceId == 301549746 then
     print("Idk")
 else
