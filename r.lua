@@ -5573,12 +5573,9 @@ do
 
 				signals.target_target_changed:Fire(locals.target_aim.target, locals.target_aim.is_targetting);
 			end});
-
-			if (not table.find(dahood_ids, game.PlaceId)) then
+		
 				rage_main_target_aim:Toggle({Name = "Bullet Tp", Flag = "rage_target_aim_bullet_tp_enabled"});
-			else
 				rage_main_target_aim:Toggle({Name = "Rocket Tp", Flag = "rage_target_aim_rocket_tp_enabled"});
-			end;
 			
 			rage_main_target_aim:Toggle({Name = "Spectate", Flag = "rage_target_aim_spectate"});
 			rage_main_target_aim:Toggle({Name = "Auto Switch", Flag = "rage_target_aim_auto_switch"});
@@ -5948,7 +5945,7 @@ do
 					local head_dots_option_list = head_dots_toggle:OptionList({});
 					head_dots_option_list:Colorpicker({Name = "Color", Flag = "visuals_esp_head_dots_color", Default = Color3.new(1, 1, 1)});
 					head_dots_option_list:Slider({Name = "Sides", Flag = "visuals_esp_head_dots_sides", Default = 6, Minimum = 1, Maximum = 100, Decimals = 1, Ending = "'"});
-					head_dots_option_list:Slider({Name = "Size", Flag = "visuals_esp_head_dots_size", Default = 10, Minimum = 1, Maximum = 20, Decimals = 0.0001, Ending = "'"});
+					head_dots_option_list:Slider({Name = "Size", Flag = "visuals_esp_head_dots_size", Default = 2, Minimum = 1, Maximum = 10, Decimals = 0.01, Ending = "'"});
 					local health_bar_toggle = esp_section:Toggle({Name = "Health Bar", Flag = "visuals_esp_health_bar_enabled"});
 					local health_bar_option_list = health_bar_toggle:OptionList({});
 					health_bar_option_list:Toggle({Name = "Health Based Color", Flag = "visuals_esp_health_bar_health_based_color"});
