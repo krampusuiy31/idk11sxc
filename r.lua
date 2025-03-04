@@ -5596,7 +5596,7 @@ do
 			checks_option_list:List({Name = "Checks", Flag = "rage_target_aim_checks", Options = {"Knocked", "Grabbed", "Friend", "Wall", "Vehicle"}, Default = {"Knocked"}, Max = 5});
 			local anti_ground_toggle = rage_main_target_aim:Toggle({Name = "Anti Ground Shots", Flag = "rage_target_aim_anti_ground_shots"});
 			local anti_ground_option_list = anti_ground_toggle:OptionList({});
-			local anti_ground_option_list:Slider({Name = "To Take Off", Flag = "rage_target_aim_anti_ground_shots_to_take_off", Default = 2, Minimum = 0.1, Maximum = 20, Decimals = 0.01, Ending = "'"});
+			anti_ground_option_list:Slider({Name = "To Take Off", Flag = "rage_target_aim_anti_ground_shots_to_take_off", Default = 2, Minimum = 0.1, Maximum = 20, Decimals = 0.01, Ending = "'"});
 			anti_ground_option_list:Slider({Name = "Dampening Factor", Flag = "rage_target_aim_dampening_factor", Default = 0.7, Minimum = 0, Maximum = 1, Decimals = 0.01, Ending = ""});
 			local fov_toggle = rage_main_target_aim:Toggle({Name = "Field Of View", Flag = "rage_target_aim_use_field_of_view"});
 			local fov_option_list = fov_toggle:OptionList({});
