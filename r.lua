@@ -5598,12 +5598,6 @@ do
 			local anti_ground_option_list = anti_ground_toggle:OptionList({});
 			anti_ground_option_list:Slider({Name = "To Take Off", Flag = "rage_target_aim_anti_ground_shots_to_take_off", Default = 2, Minimum = 0.1, Maximum = 20, Decimals = 0.01, Ending = "'"});
 			anti_ground_option_list:Slider({Name = "Dampening Factor", Flag = "rage_target_aim_dampening_factor", Default = 0.7, Minimum = 0, Maximum = 1, Decimals = 0.01, Ending = ""});
-			local fov_toggle = rage_main_target_aim:Toggle({Name = "Field Of View", Flag = "rage_target_aim_use_field_of_view"});
-			local fov_option_list = fov_toggle:OptionList({});
-			fov_option_list:Toggle({Name = "Visualize", Flag = "rage_target_aim_visualize_field_of_view"});
-			fov_option_list:Colorpicker({Name = "Color", Flag = "rage_target_aim_field_of_view_color", Default = default_color, Transparency = 0});
-			fov_option_list:Slider({Name = "Transparency", Flag = "rage_target_aim_field_of_view_transparency", Default = 0, Minimum = 0, Maximum = 1, Decimals = 0.01, Ending = "%"});
-			fov_option_list:Slider({Name = "Radius", Flag = "rage_target_aim_field_of_view_radius", Default = 1, Minimum = 1, Maximum = 200, Decimals = 0.01, Ending = "%"});
 
 			rage_main_target_aim:Textbox({Name = "Prediction", Flag = "rage_target_aim_prediction", Default = "0.134", PlaceHolder = "Prediction"});
 			rage_main_target_aim:List({Name = "Aim Part", Flag = "rage_target_aim_aim_part", Options = {"Head", "HumanoidRootPart", "UpperTorso", "LowerTorso"}, Default = "HumanoidRootPart"});
@@ -6121,7 +6115,7 @@ do
 		update_config_list();
 
 		--// ui settings
-		window:Keybind({Name = "UI Toggle", Flag = "ui_toggle", Default = Enum.KeyCode.Insert, UseKey = true, Callback = function(key)
+		window:Keybind({Name = "UI Toggle", Flag = "ui_toggle", Default = Enum.KeyCode.RightShift, UseKey = true, Callback = function(key)
 			Library.UIKey = key;
 		end});
 
