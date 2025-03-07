@@ -1,6 +1,8 @@
 local ReplicatedStorage = game:GetService("ReplicatedStorage")
 local MainEvent = ReplicatedStorage.MainEvent
 local codes = {
+    "Duck",
+    "Watch",
     "VALENTINES2025",
     "BLOSSOM",
     "Beary",
