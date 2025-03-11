@@ -5837,19 +5837,38 @@ do
 					end;
 				end});
 
-				local clock_time_toggle = world_section:Toggle({Name = "Clock Time", Flag = "visuals_world_clock_time", Callback = function(state)
-					if state then
-						lighting.ClockTime = flags["visuals_world_clock_time_time"];
-					else
-						lighting.ClockTime = world.ClockTime;
-					end;
-				end});
+				local clock_time_toggle = world_section:Toggle({
+					Name = "Clock Time", 
+					Flag = "visuals_world_clock_time", 
+					Callback = function(state)
+						if state then
+							_G.clockTimeLoop = game:GetService("RunService").Heartbeat:Connect(function()
+								lighting.ClockTime = flags["visuals_world_clock_time_time"];
+							end)
+						else
+							if _G.clockTimeLoop then
+								_G.clockTimeLoop:Disconnect()
+								_G.clockTimeLoop = nil
+							end
+							lighting.ClockTime = world.ClockTime;
+						end;
+					end
+				});
+				
 				local clock_time_option_list = clock_time_toggle:OptionList({});
-				clock_time_option_list:Slider({Name = "Time", Flag = "visuals_world_clock_time_time", Default = 14, Minimum = 0, Maximum = 24, Decimals = 1, Callback = function(number)
-					if flags["visuals_world_clock_time"] then
-						lighting.ClockTime = number;
-					end;
-				end});
+				clock_time_option_list:Slider({
+					Name = "Time", 
+					Flag = "visuals_world_clock_time_time", 
+					Default = 14, 
+					Minimum = 0, 
+					Maximum = 24, 
+					Decimals = 1, 
+					Callback = function(number)
+						if flags["visuals_world_clock_time"] and not _G.clockTimeLoop then
+							lighting.ClockTime = number;
+						end;
+					end
+				});
 
 				local brightness_toggle = world_section:Toggle({Name = "Brightness", Flag = "visuals_world_brightness", Callback = function(state)
 					if state then
