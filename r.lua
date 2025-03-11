@@ -207,7 +207,8 @@ do
 			end
 			--
 			for i, v in pairs(Table2) do
-				if Flags[i] then
+				-- Пропускаем загрузку любых настроек, связанных с cfgs
+				if Flags[i] and not string.find(i, "^setting_configuration") and not string.find(i, "^cfg") then
 					if typeof(Flags[i]) == "table" then
 						Flags[i]:Set(v)
 					else
@@ -6087,26 +6088,36 @@ do
 		end});
 
 		cfgs:Button({Name = "Save", Callback = function()
-		    local selected_config = flags.setting_configuration_list;
-		    if selected_config then
-		        writefile("krampus/configs/" .. selected_config .. ".cfg", Library:GetConfig());
-		    end;
-		end});
+			local selected_config = flags.setting_configuration_list
+			if selected_config then
+				selected_config = selected_config:gsub("krampus[/\\]configs[/\\]", "")
+				local filepath = "krampus/configs/" .. selected_config .. ".cfg"
+				writefile(filepath, Library:GetConfig())
+			end
+		end})
 
 		cfgs:Button({Name = "Load", Callback = function()
-		    local selected_config = flags.setting_configuration_list;
-		    if selected_config then
-		        Library:LoadConfig(readfile("krampus/configs/" .. selected_config .. ".cfg"));
-		    end;
-		end});
+			local selected_config = flags.setting_configuration_list
+			if selected_config then
+				selected_config = selected_config:gsub("krampus[/\\]configs[/\\]", "")
+				local filepath = "krampus/configs/" .. selected_config .. ".cfg"
+				if isfile(filepath) then
+					Library:LoadConfig(readfile(filepath))
+				end
+			end
+		end})
 
 		cfgs:Button({Name = "Delete", Callback = function()
-		    local selected_config = flags.setting_configuration_list;
-		    if selected_config then
-		        delfile("krampus/configs/" .. selected_config .. ".cfg");
-		    end;
-		    update_config_list();
-		end});
+			local selected_config = flags.setting_configuration_list
+			if selected_config then
+				selected_config = selected_config:gsub("krampus[/\\]configs[/\\]", "")
+				local filepath = "krampus/configs/" .. selected_config .. ".cfg"	
+				if isfile(filepath) then
+					delfile(filepath)
+				end
+				update_config_list()
+			end
+		end})
 
 		cfgs:Button({Name = "Refresh", Callback = function()
 		    update_config_list();
