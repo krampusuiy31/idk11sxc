@@ -12,7 +12,12 @@ local codes = {
     "2025",
     "GIFT24",
     "BenoxaHouse24",
-    "HOODMAS24"
+    "HOODMAS24",
+    "TRADEME!",
+    "HALLOWEEN2024",
+    "DACARNIVAL",
+    "Ruby",
+    "pumpkins2023"
 }
 
 for _, code in codes do
